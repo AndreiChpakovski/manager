@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'manager.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": dj_database_url.parse(os.environ.get('DATABASE_URL'))
+    "default": dj_database_url.parse(postgres://task_manager_m59s_user:RkuO94uM8QJO4ZNBU1FxBvlrZYCuKbun@dpg-cpb7qv6n7f5s73f75meg-a.oregon-postgres.render.com/task_manager_m59s))
 }
 
 # Password validation
