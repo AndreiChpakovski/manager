@@ -1,0 +1,51 @@
+{% extends 'manager/layout.html' %}
+
+{% block content %}
+<div style="margin-top: 50px;" class="ui container">
+    <h1 class="ui center aligned header">My Task manager</h1>
+    <h3 class="test_style">Manage your time!</h3>
+    <form class="ui form" action="{% url 'add' %}" method="post">
+        {% csrf_token %}
+        <div class="field">
+            <label>New task</label>
+            <input type="text" name="title" placeholder="Enter a task name"><br>
+        </div>
+        <button class="ui teal basic button" type="submit">Add</button>
+    </form>
+
+    {% for task in task_list %}
+    <div class="ui segment">
+        <p class="ui big header">{{ task.id }} {{ task.title }}</p>
+
+        {% if not task.is_complete %}
+        <span class="ui gray label">Not completed</span>
+        <a class="ui primary basic button" href="{% url 'update' task_id=task.id %}">Close</a>
+        {% else %}
+        <span class="ui green label">Completed</span>
+        <a class="ui blue button" href="{% url 'update' task_id=task.id %}">Open</a>
+        {% endif %}
+        <a class="ui negative basic button" href="{% url 'delete' task_id=task.id %}">Delete</a>
+
+        <!-- Comentarios!!! -->
+        <h4>Comments:</h4>
+        <ul>
+            {% for comment in task.comments.all %}
+                <li>{{ comment.text }} - {{ comment.created_at }}</li>
+            {% empty %}
+                <li>No comments yet.</li>
+            {% endfor %}
+        </ul>
+
+        <!-- Forma para comentarios!!!! -->
+        <form class="ui form" action="{% url 'task_list' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="task_id" value="{{ task.id }}">
+            <div class="field">
+                <textarea name="text" placeholder="Enter your comment"></textarea>
+            </div>
+            <button class="ui teal basic button" type="submit">Add Comment</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

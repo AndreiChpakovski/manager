@@ -1,0 +1,27 @@
+{% extends 'manager/layout.html' %}
+
+{% block content %}
+<div style="margin-top: 50px;" class="ui container">
+    <h1 class="ui center aligned header">{{ task.title }}</h1>
+    <p>{{ task.description }}</p>
+    <p>Status: {% if task.is_complete %}Completed{% else %}Not completed{% endif %}</p>
+
+    <h3>Comments:</h3>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.text }} - {{ comment.created_at }}</li>
+        {% empty %}
+            <li>No comments yet.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Add a comment:</h3>
+    <form class="ui form" action="{% url 'task_detail' task_id=task.id %}" method="post">
+        {% csrf_token %}
+        <div class="field">
+            <textarea name="text" placeholder="Enter your comment">{{ form.text }}</textarea>
+        </div>
+        <button class="ui teal basic button" type="submit">Add Comment</button>
+    </form>
+</div>
+{% endblock content %}
