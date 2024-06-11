@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-from .views import task_list, task_detail, task_create, task_update, task_delete
+from .views import *
 
 urlpatterns = [
     path('', views.index, name='index'),
