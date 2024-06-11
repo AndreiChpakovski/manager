@@ -23,6 +23,7 @@ class Comment(models.Model):
     task = models.ForeignKey(Task, related_name='comments', on_delete=models.CASCADE)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    task.save()
 
     def __str__(self):
         return f"Comment on {self.task.title} by {self.created_at}"
